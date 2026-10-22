@@ -66,7 +66,7 @@ function Register() {
         message="Memproses pendaftaran..."
       />
 
-      <div className="min-h-screen bg-gray flex flex-col justify-center items-center p-4 text-dark">
+      <div className="flex flex-col justify-center items-center p-4 text-dark">
         <div className="mb-6 px-2 bg-primary/2 text-primary rounded-2xl shadow-sm border border-primary/20 flex items-center justify-center">
           <MdLink />
         </div>

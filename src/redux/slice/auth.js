@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const authRegister = createAsyncThunk(
-  'auth/register',
+  'authRegister',
   async (payload, { rejectWithValue }) => {
     try {
       const response = await fetch(`${base_url}/api/auth/register`, {
@@ -25,7 +25,35 @@ export const authRegister = createAsyncThunk(
       const data = await response.json();
 
       if (!response.ok) {
-        return rejectWithValue(data);
+        throw data;
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue({
+        success: false,
+        message: error.message || 'Terjadi kesalahan jaringan',
+        data: null,
+      });
+    }
+  }
+);
+
+export const authLogin = createAsyncThunk(
+  'authLogin',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${base_url}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw data;
       }
       return data;
     } catch (error) {
@@ -68,6 +96,25 @@ const authSlice = createSlice({
         state.isFulfilled = false;
         state.isRejected = true;
         state.message = payload?.message || 'Registrasi gagal';
+      })
+      .addCase(authLogin.pending, (state) => {
+        state.isPending = true;
+        state.isFulfilled = false;
+        state.isRejected = false;
+        state.message = null;
+      })
+      .addCase(authLogin.fulfilled, (state, { payload }) => {
+        state.isPending = false;
+        state.isFulfilled = true;
+        state.isRejected = false;
+        state.token = payload?.data?.token;
+        state.message = payload?.message || 'Login berhasil';
+      })
+      .addCase(authLogin.rejected, (state, { payload }) => {
+        state.isPending = false;
+        state.isFulfilled = false;
+        state.isRejected = true;
+        state.message = payload?.message || 'Login gagal';
       });
   },
 });

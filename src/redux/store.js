@@ -12,8 +12,15 @@ import {
 import storage from 'redux-persist/es/storage';
 
 import authReducer from './slice/auth.js';
+import linksReducer from './slice/links.js';
 
 const authPersistConfig = {
+  key: 'token',
+  storage,
+  whitelist: ['token'],
+};
+
+const linksPersistConfig = {
   key: 'token',
   storage,
   whitelist: ['token'],
@@ -22,6 +29,7 @@ const authPersistConfig = {
 const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
+    links: linksReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
