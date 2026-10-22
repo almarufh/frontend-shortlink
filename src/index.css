@@ -6,7 +6,8 @@ body {
 }
 
 @theme {
-  --color-primary: #ff2a57;
+  --color-primary: #2563eb;
+  --color-secondary: #ffffff;
 
   --color-dark: #0b132a;
   --color-gray: #e8e8e84d;
@@ -35,15 +36,4 @@ body {
       padding: 52px 24px;
     }
   }
-}
-
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
